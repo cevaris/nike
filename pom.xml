@@ -28,7 +28,16 @@
     <modules>
         <module>client</module>
         <module>common</module>
+        <module>examples</module>
         <module>server</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>cevaris</groupId>
+            <artifactId>common</artifactId>
+            <version>${parentVersion}</version>
+        </dependency>
+    </dependencies>
 
 </project>

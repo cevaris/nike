@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>cevaris</groupId>
+        <groupId>com.cevaris</groupId>
         <artifactId>nike</artifactId>
-        <version>${parentVersion}</version>
+        <version>${projectVersion}</version>
     </parent>
 
     <artifactId>server</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 </project>

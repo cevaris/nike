@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <parentVersion>1.0</parentVersion>
+        <projectVersion>1.0</projectVersion>
     </properties>
 
-    <groupId>cevaris</groupId>
+    <groupId>com.cevaris</groupId>
     <artifactId>nike</artifactId>
-    <version>${parentVersion}</version>
+    <version>${projectVersion}</version>
     <packaging>pom</packaging>
 
     <repositories>
@@ -29,15 +29,8 @@
         <module>client</module>
         <module>common</module>
         <module>examples</module>
+        <module>thrift</module>
         <module>server</module>
     </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>cevaris</groupId>
-            <artifactId>common</artifactId>
-            <version>${parentVersion}</version>
-        </dependency>
-    </dependencies>
 
 </project>

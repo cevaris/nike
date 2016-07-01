@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>cevaris</groupId>
+        <groupId>com.cevaris</groupId>
         <artifactId>nike</artifactId>
-        <version>${parentVersion}</version>
+        <version>${projectVersion}</version>
     </parent>
 
     <artifactId>examples</artifactId>
@@ -16,9 +16,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>cevaris</groupId>
+            <groupId>com.cevaris</groupId>
             <artifactId>client</artifactId>
-            <version>1.0</version>
+            <version>${projectVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cevaris</groupId>
+            <artifactId>common</artifactId>
+            <version>${projectVersion}</version>
         </dependency>
     </dependencies>
 

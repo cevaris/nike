@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.cevaris</groupId>
         <artifactId>nike</artifactId>
-        <version>${projectVersion}</version>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>examples</artifactId>
@@ -18,12 +18,12 @@
         <dependency>
             <groupId>com.cevaris</groupId>
             <artifactId>client</artifactId>
-            <version>${projectVersion}</version>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.cevaris</groupId>
             <artifactId>common</artifactId>
-            <version>${projectVersion}</version>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

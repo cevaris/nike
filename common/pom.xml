@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.cevaris</groupId>
         <artifactId>nike</artifactId>
-        <version>${projectVersion}</version>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>common</artifactId>
@@ -39,6 +39,14 @@
             <artifactId>guava</artifactId>
             <version>19.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
 </project>

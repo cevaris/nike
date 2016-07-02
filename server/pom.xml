@@ -7,9 +7,22 @@
     <parent>
         <groupId>com.cevaris</groupId>
         <artifactId>nike</artifactId>
-        <version>${projectVersion}</version>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>server</artifactId>
     <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.cevaris</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cevaris</groupId>
+            <artifactId>thrift</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

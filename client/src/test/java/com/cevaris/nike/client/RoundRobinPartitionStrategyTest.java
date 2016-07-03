@@ -1,6 +1,6 @@
 package com.cevaris.nike.client;
 
-import com.cevaris.nike.util.Data;
+import com.cevaris.nike.util.Generate;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ public class RoundRobinPartitionStrategyTest {
         int partitionSize = 8;
         PartitionStrategy strategy = new RoundRobinPartitionStrategy();
 
-        List<Integer> expected = Data.intList(0, partitionSize);
+        List<Integer> expected = Generate.intList(0, partitionSize);
         expected.addAll(expected);
 
         List<Integer> actual = Lists.newArrayList();

@@ -5,11 +5,10 @@ import com.google.common.collect.DiscreteDomain;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Range;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class Data {
+public class Generate {
 
     public static Iterator<Integer> intIterator(Integer start, Integer end) {
         return ContiguousSet.create(

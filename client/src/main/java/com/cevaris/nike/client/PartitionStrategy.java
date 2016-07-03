@@ -1,7 +1,7 @@
 package com.cevaris.nike.client;
 
-interface PartitionStrategy<K> {
+interface PartitionStrategy {
 
-    Integer getPartition(Integer partitionSize, K o);
+    Integer getPartition(Integer partitionSize, Object o);
 
 }

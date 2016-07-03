@@ -12,7 +12,7 @@ public class RoundRobinPartitionStrategyTest {
 
     @Test
     public void testRoundRobinCycle() {
-        int partitionSize = 10;
+        int partitionSize = 8;
         PartitionStrategy strategy = new RoundRobinPartitionStrategy();
 
         List<Integer> expected = Data.intList(0, partitionSize);

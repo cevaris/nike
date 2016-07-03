@@ -14,7 +14,7 @@ public class HashCodePartitionStrategyTest {
     @Test
     public void testHashCodeCycle() {
         int partitionSize = 8;
-        PartitionStrategy<TestObject> strategy = new HashCodePartitionStrategy<TestObject>();
+        PartitionStrategy strategy = new HashCodePartitionStrategy();
 
         List<Integer> expected = Lists.newArrayList(6, 4, 2, 3, 1, 5, 0, 7, 1, 1, 6, 0, 3, 4, 3, 0);
         List<Integer> actual = Lists.newArrayList();

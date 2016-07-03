@@ -1,7 +1,7 @@
 package com.cevaris.nike.client;
 
-public class HashCodePartitionStrategy<T> implements PartitionStrategy<T> {
-    public Integer getPartition(Integer partitionSize, T o) {
+public class HashCodePartitionStrategy implements PartitionStrategy {
+    public Integer getPartition(Integer partitionSize, Object o) {
         return Math.abs(o.hashCode() % partitionSize);
     }
 }

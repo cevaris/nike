@@ -1,6 +1,7 @@
 package com.cevaris.nike.client;
 
 import com.cevaris.nike.thrift.PartitionService;
+import com.google.common.collect.Maps;
 import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
@@ -11,6 +12,7 @@ import org.apache.thrift.transport.TTransport;
 import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * http://stackoverflow.com/questions/328496/when-would-you-use-the-builder-pattern
@@ -21,36 +23,45 @@ public class ProvisionedPublisherClient implements PublisherClient {
 
     private List<String> brokers;
     private String topicName;
-
-    private PartitionService.Client client = null;
+    private Map<Integer, PartitionService.Client> partitionClients;
 
     public ProvisionedPublisherClient(ProvisionedPublisherClient.Builder builder) {
         this.brokers = builder.brokers;
         this.topicName = builder.topicName;
-
-        try {
-            // TODO: setup hashed based client pool based off some shard
-            String[] first = this.brokers.get(0).split(":");
-            String host = first[0];
-            Integer port = Integer.parseInt(first[1]);
-
-            TTransport transport = new TSocket(host, port);
-            transport.open();
-
-            TProtocol protocol = new TBinaryProtocol(transport);
-            this.client = new PartitionService.Client(protocol);
-        } catch (TException ex) {
-            log.error("failed connecting to broker", ex);
-        }
     }
 
     public void write(ByteBuffer key, ByteBuffer payload) {
 
     }
 
+    private Map<Integer, PartitionService.Client> setupParitionClients(List<String> brokers) {
+        Map<Integer, PartitionService.Client> clients = Maps.newConcurrentMap();
+
+        for (String broker : brokers) {
+            try {
+                // TODO: setup hashed based partitionClients pool based off some shard
+                String[] first = broker.split(":");
+                String host = first[0];
+                Integer port = Integer.parseInt(first[1]);
+
+                TTransport transport = new TSocket(host, port);
+                transport.open();
+
+                TProtocol protocol = new TBinaryProtocol(transport);
+                this.partitionClients.put(broker);
+            } catch (TException ex) {
+                log.error("failed connecting to broker", ex);
+            }
+        }
+
+
+        return clients;
+    }
+
     static class Builder {
 
         private List<String> brokers = Collections.singletonList("localhost:7321");
+        private PartitionStrategy partitionStrategy = new HashCodePartitionStrategy();
         private String topicName;
 
         public Builder brokers(List<String> brokers) {
@@ -63,7 +74,14 @@ public class ProvisionedPublisherClient implements PublisherClient {
             return this;
         }
 
+        public Builder partitionStrategy(PartitionStrategy partitionStrategy) {
+            this.partitionStrategy = partitionStrategy;
+            return this;
+        }
+
         public PublisherClient build() {
+            if (this.partitionStrategy == null)
+                throw new IllegalArgumentException("missing patition strategy");
             if (this.topicName == null)
                 throw new IllegalArgumentException("missing topic name");
             if (this.brokers == null || this.brokers.isEmpty())

@@ -1,5 +1,6 @@
 package com.cevaris.nike.server;
 
+import com.sun.javafx.fxml.PropertyNotFoundException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -9,15 +10,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-public class ServerConfig {
+public class BrokerConfig {
 
-    private Logger log = Logger.getLogger(ServerConfig.class);
-
-    public final static String SERVER_THRIFT_PORT = "server.thrift.port";
+    private Logger log = Logger.getLogger(BrokerConfig.class);
 
     private final Properties prop = new Properties();
 
-    public ServerConfig(String propsPath) {
+    public final static String SERVER_THRIFT_PORT = "server.thrift.port";
+    public final static String DATA_DIR = "server.data.dir";
+
+    public BrokerConfig(String propsPath) {
         PropertyConfigurator.configure(propsPath);
 
         File file = new File(propsPath);
@@ -40,19 +42,20 @@ public class ServerConfig {
         }
     }
 
-    public String getString(String key) {
-        return prop.getProperty(key);
-    }
-
     public Integer getInt(String key) {
-        return Integer.parseInt(prop.getProperty(key));
+        return Integer.parseInt(getOrThrow(key));
     }
 
     public Long getLong(String key) {
-        return Long.parseLong(prop.getProperty(key));
+        return Long.parseLong(getOrThrow(key));
     }
 
-    public Properties getProperties() {
-        return prop;
+    private String getOrThrow(String key) {
+        String value = prop.getProperty(key);
+        if (value == null) {
+            throw new PropertyNotFoundException(key);
+        } else {
+            return value;
+        }
     }
 }

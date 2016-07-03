@@ -1,7 +1,7 @@
 package com.cevaris.nike.examples;
 
-import com.cevaris.nike.client.Client;
-import com.cevaris.nike.client.InMemoryClient;
+import com.cevaris.nike.client.PublisherClient;
+import com.cevaris.nike.client.InMemoryPublisherClient;
 import com.cevaris.nike.util.Data;
 
 import java.util.Iterator;
@@ -9,14 +9,14 @@ import java.util.Iterator;
 public class SimpleInMemoryClient {
 
     public static void main(String[] args) {
-        Client<Integer> client = new InMemoryClient<Integer>();
+        PublisherClient<Integer> publisherClient = new InMemoryPublisherClient<Integer>();
 
-        Iterator<Integer> intIter = Data.intList(0, 10);
+        Iterator<Integer> intIter = Data.intIterator(0, 10);
         while (intIter.hasNext()) {
-            client.write(intIter.next());
+            publisherClient.write(intIter.next());
         }
 
-        Iterator<Integer> intSubscriber = client.subscriber();
+        Iterator<Integer> intSubscriber = publisherClient.subscriber();
         while (intSubscriber.hasNext()) {
             System.out.println(intSubscriber.next());
         }

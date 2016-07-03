@@ -48,7 +48,7 @@ public class ProvisionedPublisherClient implements PublisherClient {
                 transport.open();
 
                 TProtocol protocol = new TBinaryProtocol(transport);
-                this.partitionClients.put(broker);
+                this.partitionClients.put(0, new PartitionService.Client(protocol));
             } catch (TException ex) {
                 log.error("failed connecting to broker", ex);
             }

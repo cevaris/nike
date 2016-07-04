@@ -4,18 +4,20 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class MessageTest {
+public class MessageOffsetTest {
 
     @Test
     public void testMessageSerialization() {
         byte[] key = "teyKey".getBytes();
         byte[] payload = "secretPayload".getBytes();
+        long offset = 100L;
 
-        Message original = Message.fromKeyPayload(key, payload);
-        Message actual = original.fromBytes(original.toBytes());
+        MessageOffset original = new MessageOffset(offset, Message.fromKeyPayload(key, payload));
+        MessageOffset actual = MessageOffset.fromBytes(original.toBytes());
 
         assertEquals(original.toBytes(), actual.toBytes());
         assertEquals(original, actual);
     }
+
 
 }

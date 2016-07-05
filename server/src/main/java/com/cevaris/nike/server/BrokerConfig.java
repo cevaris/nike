@@ -12,7 +12,7 @@ import java.util.Properties;
 
 public class BrokerConfig {
 
-    private Logger log = Logger.getLogger(BrokerConfig.class);
+    private Logger logger = Logger.getLogger(BrokerConfig.class);
 
     private final Properties prop = new Properties();
 
@@ -26,13 +26,13 @@ public class BrokerConfig {
         FileReader reader = null;
         try {
             reader = new FileReader(file);
-            log.info(String.format("loading server config %s", file.getAbsolutePath()));
+            logger.info(String.format("loading server config %s", file.getAbsolutePath()));
 
             prop.load(reader);
         } catch (FileNotFoundException e) {
-            log.error("config lookup", e);
+            logger.error("config lookup", e);
         } catch (IOException e) {
-            log.error("config lookup", e);
+            logger.error("config lookup", e);
         } finally {
             try {
                 if (reader != null) reader.close();
@@ -42,12 +42,12 @@ public class BrokerConfig {
         }
     }
 
-    public Integer getInt(String key) {
-        return Integer.parseInt(getOrThrow(key));
+    public String getString(String key) {
+        return getOrThrow(key);
     }
 
-    public Long getLong(String key) {
-        return Long.parseLong(getOrThrow(key));
+    public Integer getInt(String key) {
+        return Integer.parseInt(getOrThrow(key));
     }
 
     private String getOrThrow(String key) {

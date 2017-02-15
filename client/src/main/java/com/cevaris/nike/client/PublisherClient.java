@@ -4,6 +4,6 @@ import java.nio.ByteBuffer;
 
 public interface PublisherClient {
 
-    void write(ByteBuffer key, ByteBuffer payload);
+  void write(ByteBuffer key, ByteBuffer payload);
 
 }

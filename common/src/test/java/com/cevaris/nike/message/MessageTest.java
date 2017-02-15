@@ -1,21 +1,25 @@
 package com.cevaris.nike.message;
 
+import java.nio.ByteBuffer;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class MessageTest {
 
-    @Test
-    public void testMessageSerialization() {
-        byte[] key = "teyKey".getBytes();
-        byte[] payload = "secretPayload".getBytes();
+  @Test
+  public void testMessageSerialization() {
+    byte[] key = "teyKey".getBytes();
+    byte[] payload = "myPayload".getBytes();
 
-        Message original = Message.fromKeyPayload(key, payload);
-        Message actual = original.fromBytes(original.toBytes());
+    Message expected = Message.fromKeyPayload(key, payload);
+    ByteBuffer serializedMessage = expected.toByteBuffer();
 
-        assertEquals(original.toBytes(), actual.toBytes());
-        assertEquals(original, actual);
-    }
+    Message actual = Message.fromBytes(serializedMessage);
+
+    assertEquals(expected.toByteBuffer(), actual.toByteBuffer());
+    assertEquals(expected, actual);
+  }
 
 }

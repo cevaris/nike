@@ -8,18 +8,18 @@ import java.util.function.Consumer;
 
 abstract class MessageSet implements Iterable<MessageOffset> {
 
-    protected final static Integer MessageSizeLength = 4;
-    protected final static Integer OffsetLength = 8;
-    protected final static Integer LogOverhead = MessageSizeLength + OffsetLength;
+  protected final static Integer MessageSizeLength = 4;
+  protected final static Integer OffsetLength = 8;
+  protected final static Integer LogOverhead = MessageSizeLength + OffsetLength;
 
-    abstract public Integer writeTo(GatheringByteChannel channel, Long offset, Integer maxSize) throws IOException;
+  abstract public Integer writeTo(GatheringByteChannel channel, Long offset, Integer maxSize) throws IOException;
 
-    abstract public Iterator<MessageOffset> iterator();
+  abstract public Iterator<MessageOffset> iterator();
 
-    abstract public void forEach(Consumer<? super MessageOffset> action);
+  abstract public void forEach(Consumer<? super MessageOffset> action);
 
-    abstract public Spliterator<MessageOffset> spliterator();
+  abstract public Spliterator<MessageOffset> spliterator();
 
-    abstract public Integer currentByteSize();
+  abstract public Integer currentByteSize();
 
 }

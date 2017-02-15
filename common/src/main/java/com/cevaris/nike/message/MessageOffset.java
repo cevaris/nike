@@ -1,9 +1,9 @@
 package com.cevaris.nike.message;
 
-import com.google.common.base.Preconditions;
-
 import java.nio.ByteBuffer;
 import java.util.Objects;
+
+import com.google.common.base.Preconditions;
 
 /**
  * <pre><code>
@@ -20,74 +20,74 @@ import java.util.Objects;
  */
 public class MessageOffset {
 
-    /**
-     * offset of message in segment file
-     */
-    private final static Integer OffsetOffset = 0;
-    private final static Integer OffsetLen = 8;
+  /**
+   * offset of message in segment file
+   */
+  private final static Integer OffsetOffset = 0;
+  private final static Integer OffsetLen = 8;
 
-    /**
-     * number of bytes of full message
-     */
-    private final static Integer MessageLengthOffset = OffsetOffset + OffsetLen;
-    private final static Integer MessageLengthLen = 4;
+  /**
+   * number of bytes of full message
+   */
+  private final static Integer MessageLengthOffset = OffsetOffset + OffsetLen;
+  private final static Integer MessageLengthLen = 4;
 
-    private ByteBuffer buffer;
-    private Long offset;
+  private ByteBuffer buffer;
+  private Long offset;
 
-    public MessageOffset(Long offset, Message message) {
-        Preconditions.checkNotNull(offset);
-        Preconditions.checkNotNull(message);
+  public MessageOffset(Long offset, Message message) {
+    Preconditions.checkNotNull(offset);
+    Preconditions.checkNotNull(message);
 
-        this.offset = offset;
+    this.offset = offset;
 
-        Integer messageLength = message.toBytes().array().length;
+    Integer messageLength = message.toByteBuffer().array().length;
 
-        this.buffer = ByteBuffer.allocate(
-                OffsetLen + MessageLengthLen + messageLength
-        );
+    this.buffer = ByteBuffer.allocate(
+        OffsetLen + MessageLengthLen + messageLength
+    );
 
-        this.buffer.putLong(offset);
-        this.buffer.putInt(messageLength);
-        this.buffer.put(message.toBytes());
+    this.buffer.putLong(offset);
+    this.buffer.putInt(messageLength);
+    this.buffer.put(message.toByteBuffer());
+  }
+
+  public Long getOffset() {
+    return offset;
+  }
+
+  public ByteBuffer toBytes() {
+    buffer.rewind();
+    return buffer;
+  }
+
+  public static MessageOffset fromBytes(ByteBuffer bytes) {
+    Preconditions.checkNotNull(bytes);
+
+    Long offset = bytes.getLong();
+    Integer messageLength = bytes.getInt();
+
+    byte[] messageBytes = new byte[messageLength];
+    bytes.get(messageBytes);
+    Message message = Message.fromBytes(ByteBuffer.wrap(messageBytes));
+
+    return new MessageOffset(offset, message);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(buffer);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
     }
-
-    public Long getOffset() {
-        return offset;
+    if (obj == null || getClass() != obj.getClass()) {
+      return false;
     }
-
-    public ByteBuffer toBytes() {
-        buffer.rewind();
-        return buffer;
-    }
-
-    public static MessageOffset fromBytes(ByteBuffer bytes) {
-        Preconditions.checkNotNull(bytes);
-
-        Long offset = bytes.getLong();
-        Integer messageLength = bytes.getInt();
-
-        byte[] messageBytes = new byte[messageLength];
-        bytes.get(messageBytes);
-        Message message = Message.fromBytes(ByteBuffer.wrap(messageBytes));
-
-        return new MessageOffset(offset, message);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(buffer);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        final MessageOffset other = (MessageOffset) obj;
-        return Objects.equals(this.buffer, other.toBytes());
-    }
+    final MessageOffset other = (MessageOffset) obj;
+    return Objects.equals(this.buffer, other.toBytes());
+  }
 }

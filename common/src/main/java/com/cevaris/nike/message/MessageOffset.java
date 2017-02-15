@@ -33,19 +33,27 @@ public class MessageOffset {
     private final static Integer MessageLengthLen = 4;
 
     private ByteBuffer buffer;
+    private Long offset;
 
     public MessageOffset(Long offset, Message message) {
+        Preconditions.checkNotNull(offset);
         Preconditions.checkNotNull(message);
+
+        this.offset = offset;
 
         Integer messageLength = message.toBytes().array().length;
 
-        buffer = ByteBuffer.allocate(
+        this.buffer = ByteBuffer.allocate(
                 OffsetLen + MessageLengthLen + messageLength
         );
 
-        buffer.putLong(offset);
-        buffer.putInt(messageLength);
-        buffer.put(message.toBytes());
+        this.buffer.putLong(offset);
+        this.buffer.putInt(messageLength);
+        this.buffer.put(message.toBytes());
+    }
+
+    public Long getOffset() {
+        return offset;
     }
 
     public ByteBuffer toBytes() {
@@ -54,6 +62,8 @@ public class MessageOffset {
     }
 
     public static MessageOffset fromBytes(ByteBuffer bytes) {
+        Preconditions.checkNotNull(bytes);
+
         Long offset = bytes.getLong();
         Integer messageLength = bytes.getInt();
 

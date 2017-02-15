@@ -1,29 +1,25 @@
 package com.cevaris.nike.server;
 
-import com.cevaris.nike.message.TopicPartition;
 import com.cevaris.nike.thrift.PartitionService;
-import com.google.common.collect.Maps;
+
 import org.apache.log4j.Logger;
 import org.apache.thrift.server.TServer;
 import org.apache.thrift.server.TThreadPoolServer;
 import org.apache.thrift.transport.TServerSocket;
 import org.apache.thrift.transport.TTransportException;
 
-import java.io.File;
-import java.util.Map;
-
-public class Broker {
-    private static Logger log = Logger.getLogger(Broker.class);
+public class Nike {
+    private static Logger log = Logger.getLogger(Nike.class);
 
     private final BrokerConfig config;
 
-    public Broker() {
+    public Nike() {
         config = new BrokerConfig("config/config.properties");
     }
 
     public static void main(String[] args) {
-        Broker broker = new Broker();
-        broker.listen();
+        Nike nike = new Nike();
+        nike.listen();
     }
 
     private void listen() {

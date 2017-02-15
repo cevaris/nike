@@ -1,6 +1,16 @@
 language: java
 jdk:
   - oraclejdk8
-sudo: false
+
+
+before_install:
+  - THRIFT_VERSION=0.9.3
+  - sudo apt-get update -qq
+  - sudo apt-get install libboost-dev libboost-test-dev libboost-program-options-dev libevent-dev automake libtool flex bison pkg-config g++ libssl-dev
+  - wget http://www.us.apache.org/dist/thrift/$THRIFT_VERSION/thrift-$THRIFT_VERSION.tar.gz
+  - tar xfz thrift-$THRIFT_VERSION.tar.gz
+  - cd thrift-$THRIFT_VERSION && ./configure && sudo make install
+
+
 script:
   - mvn clean verify
